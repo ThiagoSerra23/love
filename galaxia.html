@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Galaxia da Alice</title>
+    <title>Para Alice ❤️</title>
     <style>
         body,
         html {
@@ -19,10 +19,45 @@
             display: block;
             touch-action: none;
         }
+
+        /* --- ESTILO DO BOTÃO DE VOLTAR --- */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 25px;
+            background: rgba(0, 0, 0, 0.6);
+            /* Fundo meio transparente */
+            border: 2px solid #d400ff;
+            /* Borda Roxa */
+            border-radius: 999px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            z-index: 10000;
+            /* Garante que fique em cima de tudo */
+            backdrop-filter: blur(4px);
+            box-shadow: 0 0 10px #aa00ff;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            background: #d400ff;
+            color: #000;
+            /* Texto fica preto para contraste */
+            box-shadow: 0 0 20px #ff00ff;
+            transform: scale(1.1);
+        }
     </style>
 </head>
 
 <body>
+
+    <a href="index.html" class="back-btn">⬅ Voltar</a>
 
     <canvas id="c"></canvas>
 
@@ -85,19 +120,17 @@
         const core = new THREE.Mesh(new THREE.SphereGeometry(40, 64, 64), coreMat);
         scene.add(core);
 
-        // --- TEXTO MENOR E ROXO ---
+        // --- TEXTO ---
         function makeCenterTextTexture(text) {
             const cvs = document.createElement("canvas"); cvs.width = 1024; cvs.height = 1024;
             const ctx = cvs.getContext("2d"); ctx.clearRect(0, 0, cvs.width, cvs.height);
 
-            // 1. Tamanho da fonte reduzido (era 140px)
             ctx.font = "bold 90px Arial";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
 
-            // 2. Cor Roxa Neon
             ctx.fillStyle = "#d400ff";
-            ctx.shadowColor = "#aa00ff"; // Sombra roxa
+            ctx.shadowColor = "#aa00ff";
             ctx.shadowBlur = 40;
 
             ctx.fillText(text, cvs.width / 2, cvs.height / 2);
@@ -109,12 +142,11 @@
         const centerMat = new THREE.SpriteMaterial({
             map: centerTex,
             transparent: true,
-            depthTest: false, // Garante que fica na frente da bola
+            depthTest: false,
             depthWrite: false
         });
 
         const centerSprite = new THREE.Sprite(centerMat);
-        // 3. Escala reduzida (era 100)
         centerSprite.scale.set(70, 70, 1);
         centerSprite.renderOrder = 999;
         scene.add(centerSprite);
@@ -199,7 +231,6 @@
             const pulse = 1 + 0.05 * Math.sin(3 * t);
             core.scale.set(pulse, pulse, pulse);
 
-            // Texto pulsando com o tamanho base corrigido (70)
             centerSprite.scale.set(70 * pulse, 70 * pulse, 1);
 
             textGroup.children.forEach((sprite) => {
