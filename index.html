@@ -10,39 +10,82 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <div class="background-overlay"></div>
+    <div id="intro-overlay">
+        <video id="intro-video" playsinline>
+            <source src="aliceh.mp4" type="video/mp4">
+        </video>
+        <button id="unmute-btn" style="display:none;">🔇 Ativar Som</button>
+    </div>
 
-    <header class="glass-header">
+    <div class="decoration circle-1"></div>
+    <div class="decoration circle-2"></div>
+
+    <header>
         <div class="logo">Alice</div>
         <nav>
             <ul>
                 <li><a href="#">Início</a></li>
                 <li><a href="#">Nossa História</a></li>
-                <li><a href="#">Galeria <span class="heart-icon">♥</span></a></li>
+                <li><a href="#">Galeria</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <div class="content-wrapper">
-            <div class="text-card glass-card">
-                <h1>Alice, você é a <br><em>minha constante.</em></h1>
-                <p>Onde a lógica se perde, meu amor por você floresce.</p>
-                <button class="cta-button">Explore o Amor</button>
-            </div>
-
-            <div class="heart-container">
-                <img src="assets/custom_heart.png" alt="Coração Cósmico" class="floating-heart">
-            </div>
-        </div>
+        <section class="hero-section">
+            <h1 class="hero-title">
+                Alice
+                <span>Minha Constante</span>
+            </h1>
+            <p class="hero-subtitle">Onde a lógica se perde, meu amor por você floresce.</p>
+            <a href="flower.html" class="cta-button">Ver Surpresa 🌸</a>
+        </section>
     </main>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.getElementById('intro-video');
+            const overlay = document.getElementById('intro-overlay');
+            const unmuteBtn = document.getElementById('unmute-btn');
 
-    <script src="script.js"></script>
+            // Tenta reproduzir automaticamente
+            const playPromise = video.play();
+
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // Autoplay iniciou!
+                    // Verifica se está mutado (alguns browsers só deixam autoplay se mutado)
+                    if (video.muted) {
+                        unmuteBtn.style.display = 'block';
+                        unmuteBtn.textContent = '🔊 Ativar Som';
+                    }
+                }).catch(error => {
+                    // Autoplay foi impedido. Mostra botão para iniciar com som.
+                    unmuteBtn.style.display = 'block';
+                    unmuteBtn.textContent = '▶ Iniciar';
+                });
+            }
+
+            unmuteBtn.addEventListener('click', () => {
+                video.muted = false;
+                video.volume = 1.0;
+                video.play();
+                unmuteBtn.style.display = 'none';
+            });
+
+            video.addEventListener('ended', () => {
+                overlay.classList.add('fade-out');
+                // Remove do DOM após a transição para não atrapalhar cliques
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                }, 2000); // 2s é o tempo da transição no CSS
+            });
+        });
+    </script>
 </body>
 
 </html>
