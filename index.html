@@ -1,89 +1,423 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alice + Amor</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <title>Alice & Eu</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&display=swap');
+
+        :root {
+            --primary-color: #d86bf3;
+            --bg-gradient: radial-gradient(circle at center, #2e1045 0%, #0f0518 100%);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --white: #ffffff;
+            --text-shadow: 0 0 15px rgba(216, 107, 243, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--white);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- VIDEO INTRO OVERLAY --- */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.5s ease, visibility 1.5s;
+        }
+
+        #intro-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #intro-overlay.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Botão Pular Intro */
+        #skip-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            padding: 10px 24px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            z-index: 10001;
+            transition: all 0.3s ease;
+        }
+
+        #skip-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        /* --- FUNDO DE CORAÇÕES --- */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            top: -10%;
+            animation: fall linear forwards;
+            filter: drop-shadow(0 0 5px rgba(255, 192, 203, 0.8));
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) rotate(0deg) translateX(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(110vh) rotate(360deg) translateX(20px);
+                opacity: 0;
+            }
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(15, 5, 24, 0.3);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2em;
+            color: var(--white);
+            text-decoration: none;
+            text-shadow: var(--text-shadow);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--white);
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding: 5px 0;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- CONTEÚDO PRINCIPAL --- */
+        .hero {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            text-align: center;
+            padding: 120px 20px 20px 20px;
+        }
+
+        .hero h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 5.5em;
+            margin: 0;
+            background: linear-gradient(to right, #ffffff, #ffccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(216, 107, 243, 0.4);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            margin-top: 10px;
+            margin-bottom: 50px;
+            color: #e0d0e6;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        /* --- CONTADOR --- */
+        .counter-box {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .time-unit {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 25px 20px;
+            border-radius: 20px;
+            width: 110px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s;
+        }
+
+        .time-unit:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .number {
+            font-size: 2.8em;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .label {
+            font-size: 0.75em;
+            text-transform: uppercase;
+            color: #ffccff;
+            margin-top: 5px;
+        }
+
+        /* --- BOTÃO SURPRESA --- */
+        .btn-primary {
+            padding: 18px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            background: linear-gradient(135deg, #a044ff, #d86bf3);
+            color: white;
+            box-shadow: 0 0 20px rgba(160, 68, 255, 0.5);
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 40px rgba(216, 107, 243, 0.8);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+                position: absolute;
+                background: transparent;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 3.5em;
+            }
+
+            .time-unit {
+                width: 75px;
+                padding: 15px 5px;
+            }
+
+            .number {
+                font-size: 1.8em;
+            }
+        }
+    </style>
 </head>
 
 <body>
+
     <div id="intro-overlay">
-        <video id="intro-video" playsinline>
+        <video id="intro-video" playsinline muted autoplay>
             <source src="aliceh.mp4" type="video/mp4">
         </video>
-        <button id="unmute-btn" style="display:none;">🔇 Ativar Som</button>
+        <button id="skip-btn">Pular Intro ⏭</button>
     </div>
 
-    <div class="decoration circle-1"></div>
-    <div class="decoration circle-2"></div>
+    <div class="hearts-container" id="hearts-container"></div>
 
-    <header>
-        <div class="logo">Alice</div>
-        <nav>
-            <ul>
-                <li><a href="#">Início</a></li>
-                <li><a href="#">Nossa História</a></li>
-                <li><a href="#">Galeria</a></li>
-            </ul>
-        </nav>
-    </header>
+    <nav class="navbar">
+        <a href="#" class="logo">Alice & Thiago</a>
+        <div class="nav-links">
+            <a href="livro.html">História</a>
+            <a href="universo.html">Universo</a>
+            <a href="galaxia.html">Galaxia</a>
+        </div>
+    </nav>
 
-    <main>
-        <section class="hero-section">
-            <h1 class="hero-title">
-                Alice
-                <span>Minha Constante</span>
-            </h1>
-            <p class="hero-subtitle">Onde a lógica se perde, meu amor por você floresce.</p>
-            <a href="flower.html" class="cta-button">Ver Surpresa 🌸</a>
-        </section>
-    </main>
+    <section class="hero">
+        <h1>Minha Essência</h1>
+        <p>Juntos construindo nossa história há:</p>
+
+        <div class="counter-box">
+            <div class="time-unit">
+                <span class="number" id="days">00</span>
+                <span class="label">Dias</span>
+            </div>
+            <div class="time-unit">
+                <span class="number" id="hours">00</span>
+                <span class="label">Horas</span>
+            </div>
+            <div class="time-unit">
+                <span class="number" id="minutes">00</span>
+                <span class="label">Min</span>
+            </div>
+            <div class="time-unit">
+                <span class="number" id="seconds">00</span>
+                <span class="label">Seg</span>
+            </div>
+        </div>
+
+        <a href="flower.html" class="btn-primary">
+            <i class="fas fa-gift"></i> Uma flor para minha flor
+        </a>
+    </section>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- 1. LÓGICA DO VÍDEO INTRO ---
             const video = document.getElementById('intro-video');
             const overlay = document.getElementById('intro-overlay');
-            const unmuteBtn = document.getElementById('unmute-btn');
+            const skipBtn = document.getElementById('skip-btn');
 
-            // Tenta reproduzir automaticamente
+            function closeIntro() {
+                video.pause();
+                overlay.classList.add('fade-out');
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                }, 1500); // Tempo da transição
+            }
+
+            // Tenta dar play
             const playPromise = video.play();
-
             if (playPromise !== undefined) {
-                playPromise.then(_ => {
-                    // Autoplay iniciou!
-                    // Verifica se está mutado (alguns browsers só deixam autoplay se mutado)
-                    if (video.muted) {
-                        unmuteBtn.style.display = 'block';
-                        unmuteBtn.textContent = '🔊 Ativar Som';
-                    }
-                }).catch(error => {
-                    // Autoplay foi impedido. Mostra botão para iniciar com som.
-                    unmuteBtn.style.display = 'block';
-                    unmuteBtn.textContent = '▶ Iniciar';
+                playPromise.catch(error => {
+                    console.log("Autoplay bloqueado. Aguardando interação.");
                 });
             }
 
-            unmuteBtn.addEventListener('click', () => {
-                video.muted = false;
-                video.volume = 1.0;
-                video.play();
-                unmuteBtn.style.display = 'none';
+            // Se clicar no vídeo, ativa o som
+            video.addEventListener('click', () => {
+                video.muted = !video.muted;
             });
 
-            video.addEventListener('ended', () => {
-                overlay.classList.add('fade-out');
-                // Remove do DOM após a transição para não atrapalhar cliques
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                }, 2000); // 2s é o tempo da transição no CSS
-            });
+            skipBtn.addEventListener('click', closeIntro);
+            video.addEventListener('ended', closeIntro);
+
+            // --- 2. CONTADOR DE TEMPO ---
+            // DATA ATUALIZADA: 28 de Setembro de 2025
+            // Formato: Ano, Mês (Janeiro=0, Setembro=8), Dia
+            const startDate = new Date(2025, 8, 28, 0, 0, 0);
+
+            function updateCounter() {
+                const now = new Date();
+                const diff = now - startDate;
+
+                // Se a data for no futuro, mostra zeros ou calcula contagem regressiva?
+                // Assumindo que você quer ver o tempo CORRIDO, se a data for futura, pode dar negativo.
+                // Vou colocar um Math.abs para mostrar a diferença absoluta caso a data seja futura.
+
+                const days = Math.floor(Math.abs(diff) / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((Math.abs(diff) / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((Math.abs(diff) / 1000 / 60) % 60);
+                const seconds = Math.floor((Math.abs(diff) / 1000) % 60);
+
+                document.getElementById('days').innerText = days < 10 ? '0' + days : days;
+                document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+                document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+                document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+            }
+            setInterval(updateCounter, 1000);
+            updateCounter();
+
+            // --- 3. CHUVA DE CORAÇÕES ---
+            function createHeart() {
+                const heart = document.createElement('div');
+                const container = document.getElementById('hearts-container');
+                heart.classList.add('heart');
+                heart.innerHTML = '&#10084;';
+                heart.style.left = Math.random() * 100 + 'vw';
+                const size = Math.random() * 1.5 + 0.8;
+                heart.style.fontSize = size + 'rem';
+
+                const colors = ['rgba(255,255,255,0.3)', 'rgba(255,182,193,0.5)', 'rgba(221,160,221,0.5)'];
+                heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+
+                const duration = Math.random() * 3 + 4;
+                heart.style.animationDuration = duration + 's';
+
+                container.appendChild(heart);
+                setTimeout(() => { heart.remove(); }, duration * 1000);
+            }
+            setInterval(createHeart, 300);
         });
     </script>
 </body>

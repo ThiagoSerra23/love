@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Universo de Alice</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Montserrat:wght@300;500&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, #1a0024 0%, #09000f 100%);
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* --- BOTÃO VOLTAR (NOVO) --- */
+        .back-btn {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 10px 25px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            /* Garante que fique acima de tudo */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .back-btn:hover {
+            background: white;
+            color: #1a0024;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+            transform: translateX(5px);
+            /* Pequeno movimento para a direita */
+        }
+
+        /* --- TÍTULO --- */
+        .title {
+            position: absolute;
+            top: 30px;
+            width: 100%;
+            text-align: center;
+            z-index: 50;
+            pointer-events: none;
+        }
+
+        .title h1 {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 2.2em;
+            margin: 0;
+            text-shadow: 0 0 15px #d8bfd8, 0 0 30px #8a2be2;
+            color: #fff;
+        }
+
+        .title p {
+            font-size: 0.8em;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-top: 5px;
+            color: #a450e0;
+        }
+
+        /* --- AS 16 ESTRELAS PRINCIPAIS --- */
+        .main-star {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #ffffff 30%, #8a2be2 100%);
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 0 10px #ffffff, 0 0 20px #8a2be2;
+            animation: pulse 3s infinite alternate ease-in-out;
+            transition: all 0.4s ease;
+        }
+
+        .main-star:hover {
+            transform: scale(1.5);
+            box-shadow: 0 0 25px #ffffff, 0 0 50px #8a2be2, 0 0 70px #ffffff;
+            background: radial-gradient(circle, #ffffff 50%, #d8bfd8 100%);
+            z-index: 101;
+        }
+
+        .main-star.active {
+            background: radial-gradient(circle, #ffffff 60%, #ffd700 100%);
+            box-shadow: 0 0 20px #ffffff, 0 0 40px #ffd700, 0 0 80px #ffd700;
+            transform: scale(1.3);
+        }
+
+        @keyframes pulse {
+            from {
+                opacity: 0.5;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+        }
+
+        /* --- POSIÇÕES PARA O CORAÇÃO PERFEITO --- */
+        #star-1 {
+            top: 30%;
+            left: 50%;
+            z-index: 102;
+        }
+
+        #star-2 {
+            top: 24%;
+            left: 58%;
+        }
+
+        #star-3 {
+            top: 22%;
+            left: 68%;
+        }
+
+        #star-4 {
+            top: 26%;
+            left: 78%;
+        }
+
+        #star-5 {
+            top: 38%;
+            left: 82%;
+        }
+
+        #star-6 {
+            top: 52%;
+            left: 78%;
+        }
+
+        #star-7 {
+            top: 66%;
+            left: 70%;
+        }
+
+        #star-8 {
+            top: 78%;
+            left: 60%;
+        }
+
+        #star-9 {
+            top: 88%;
+            left: 50%;
+            z-index: 102;
+        }
+
+        #star-10 {
+            top: 78%;
+            left: 40%;
+        }
+
+        #star-11 {
+            top: 66%;
+            left: 30%;
+        }
+
+        #star-12 {
+            top: 52%;
+            left: 22%;
+        }
+
+        #star-13 {
+            top: 38%;
+            left: 18%;
+        }
+
+        #star-14 {
+            top: 26%;
+            left: 22%;
+        }
+
+        #star-15 {
+            top: 22%;
+            left: 32%;
+        }
+
+        #star-16 {
+            top: 24%;
+            left: 42%;
+        }
+
+
+        /* --- CANVAS (LINHAS) --- */
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        /* --- MENSAGEM --- */
+        .message-box {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(50px);
+            width: 90%;
+            max-width: 600px;
+            background: rgba(20, 0, 40, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 50px rgba(138, 43, 226, 0.4);
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            opacity: 0;
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 200;
+            pointer-events: none;
+        }
+
+        .message-box.visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+
+        .close-btn {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 8px 25px;
+            margin-top: 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8em;
+            text-transform: uppercase;
+        }
+
+        .close-btn:hover {
+            background: white;
+            color: #2e003e;
+        }
+
+        /* --- REVELAÇÃO FINAL (M + T) --- */
+        #final-reveal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 150;
+        }
+
+        #final-reveal.visible {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        #final-reveal h2 {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 5em;
+            margin: 0;
+            background: linear-gradient(to bottom, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8)) drop-shadow(0 0 40px rgba(255, 100, 0, 0.5));
+            animation: pulseText 2s infinite alternate;
+        }
+
+        @keyframes pulseText {
+            from {
+                filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+            }
+
+            to {
+                filter: drop-shadow(0 0 35px rgba(255, 215, 0, 1)) drop-shadow(0 0 60px rgba(255, 100, 0, 0.7));
+            }
+        }
+
+        /* --- POEIRA ESTELAR --- */
+        .tiny-star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle random infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0;
+                transform: scale(0.2)
+            }
+
+            50% {
+                opacity: 1
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(0.2)
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="index.html" class="back-btn">
+        &#8592; Voltar
+    </a>
+
+    <div class="title">
+        <h1>O Universo de Alice</h1>
+        <p>Conecte as estrelas e forme nosso coração</p>
+    </div>
+
+    <canvas id="canvas"></canvas>
+
+    <div id="universe">
+        <div class="main-star" id="star-1" data-id="1"></div>
+        <div class="main-star" id="star-2" data-id="2"></div>
+        <div class="main-star" id="star-3" data-id="3"></div>
+        <div class="main-star" id="star-4" data-id="4"></div>
+        <div class="main-star" id="star-5" data-id="5"></div>
+        <div class="main-star" id="star-6" data-id="6"></div>
+        <div class="main-star" id="star-7" data-id="7"></div>
+        <div class="main-star" id="star-8" data-id="8"></div>
+        <div class="main-star" id="star-9" data-id="9"></div>
+        <div class="main-star" id="star-10" data-id="10"></div>
+        <div class="main-star" id="star-11" data-id="11"></div>
+        <div class="main-star" id="star-12" data-id="12"></div>
+        <div class="main-star" id="star-13" data-id="13"></div>
+        <div class="main-star" id="star-14" data-id="14"></div>
+        <div class="main-star" id="star-15" data-id="15"></div>
+        <div class="main-star" id="star-16" data-id="16"></div>
+    </div>
+
+    <div id="final-reveal">
+        <h2>M + T</h2>
+    </div>
+
+    <div class="message-box" id="msgBox">
+        <p id="msgText" style="font-size: 1.1em; line-height: 1.5; font-family: 'Montserrat', sans-serif;">...</p>
+        <button class="close-btn" onclick="closeMsg()">Fechar</button>
+    </div>
+
+    <script>
+        const messages = {
+            1: "O começo de tudo. Você é o centro do meu universo.",
+            2: "Sua companhia transforma qualquer dia comum em uma aventura.",
+            3: "Admiro a leveza com que você leva a vida e me ensina a sorrir.",
+            4: "Seus olhos têm um brilho que ilumina até meus dias mais escuros.",
+            5: "Sua força interior é a coisa mais inspiradora que eu conheço.",
+            6: "Amo a sua gentileza e como você trata todos ao seu redor.",
+            7: "Quando penso no futuro, a única certeza é que quero você nele.",
+            8: "Você desperta o melhor de mim, todos os dias, sem esforço.",
+            9: "Sua alma é linda, Alice. Tão linda quanto as estrelas.",
+            10: "Seu abraço é o meu lugar favorito no mundo inteiro.",
+            11: "O som da sua voz é a minha melodia preferida.",
+            12: "Cada memória que criamos juntos é um tesouro que guardo.",
+            13: "Obrigado por me apoiar e ser minha maior incentivadora.",
+            14: "Com você, aprendi o verdadeiro significado de cumplicidade.",
+            15: "Sua lealdade e seu amor são os maiores presentes que ganhei.",
+            16: "Você é meu universo, meu começo, meio e fim. Te amo."
+        };
+
+        const stars = document.querySelectorAll('.main-star');
+        const msgBox = document.getElementById('msgBox');
+        const msgText = document.getElementById('msgText');
+        const finalReveal = document.getElementById('final-reveal');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        let activeStars = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            drawLines();
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const id = parseInt(star.getAttribute('data-id'));
+                msgText.innerText = messages[id];
+                msgBox.classList.add('visible');
+
+                if (!star.classList.contains('active')) {
+                    star.classList.add('active');
+                    const rect = star.getBoundingClientRect();
+                    activeStars.push({
+                        id,
+                        x: rect.left + rect.width / 2,
+                        y: rect.top + rect.height / 2
+                    });
+
+                    activeStars.sort((a, b) => a.id - b.id);
+                    drawLines();
+                }
+            });
+        });
+
+        function closeMsg() { msgBox.classList.remove('visible'); }
+
+        function drawLines() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (activeStars.length < 2) return;
+
+            ctx.beginPath();
+            ctx.moveTo(activeStars[0].x, activeStars[0].y);
+            for (let i = 1; i < activeStars.length; i++) { ctx.lineTo(activeStars[i].x, activeStars[i].y); }
+
+            const hasFirst = activeStars.find(s => s.id === 1);
+            const hasLast = activeStars.find(s => s.id === 16);
+            if (hasFirst && hasLast && activeStars.length === 16) {
+                ctx.lineTo(hasFirst.x, hasFirst.y);
+            }
+
+            // Camada de brilho
+            ctx.strokeStyle = 'rgba(255, 160, 0, 0.6)';
+            ctx.lineWidth = 6;
+            ctx.lineCap = 'round';
+            ctx.shadowBlur = 30;
+            ctx.shadowColor = '#ff8c00';
+            ctx.stroke();
+
+            // Camada de núcleo
+            ctx.beginPath();
+            ctx.moveTo(activeStars[0].x, activeStars[0].y);
+            for (let i = 1; i < activeStars.length; i++) { ctx.lineTo(activeStars[i].x, activeStars[i].y); }
+            if (hasFirst && hasLast && activeStars.length === 16) {
+                ctx.lineTo(hasFirst.x, hasFirst.y);
+            }
+            ctx.strokeStyle = '#ffffdd';
+            ctx.lineWidth = 3;
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = '#ffffdd';
+            ctx.stroke();
+
+            if (activeStars.length === 16) {
+                closeMsg();
+                setTimeout(() => {
+                    finalReveal.classList.add('visible');
+                }, 500);
+            }
+        }
+
+        function createTinyStars() {
+            const container = document.body;
+            for (let i = 0; i < 350; i++) {
+                const s = document.createElement('div');
+                s.className = 'tiny-star';
+                s.style.left = Math.random() * 100 + 'vw';
+                s.style.top = Math.random() * 100 + 'vh';
+                const size = Math.random() * 2 + 'px';
+                s.style.width = size; s.style.height = size;
+                s.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                s.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(s);
+            }
+        }
+        createTinyStars();
+    </script>
+</body>
+
+</html>

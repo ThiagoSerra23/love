@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="pt-br">
 
 <head>
   <meta charset="UTF-8" />
@@ -7,17 +7,96 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="css\main.css" />
   <link rel="icon" href="img/flowers.png" type="image/x-icon" />
-  <title>Flower</title>
+  <title>Flor</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+    /* --- OTIMIZAÇÃO DE PERFORMANCE (Tirar o travamento) --- */
+    body {
+      /* Começa invisível para o navegador calcular o layout sem travar visualmente */
+      opacity: 0;
+      animation: pageFadeIn 1.5s ease-out forwards;
+      background-color: #000;
+      /* Evita flash branco */
+    }
+
+    /* Animação suave de entrada */
+    @keyframes pageFadeIn {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    /* Força a GPU a processar as flores para não travar a CPU */
+    .flower,
+    .flower__leaf,
+    .growing-grass,
+    .grow-ans {
+      will-change: transform, opacity;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+    }
+
+    /* --- ESTILO DO BOTÃO VOLTAR --- */
+    .back-btn {
+      position: absolute;
+      top: 25px;
+      left: 25px;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.8);
+      font-family: 'Playfair Display', serif;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 10px 25px;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(2px);
+    }
+
+    .back-btn:hover {
+      background: white;
+      color: #1a0024;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+      transform: translateX(5px);
+      border-color: white;
+    }
+
+    /* Ajuste para Mobile */
+    @media (max-width: 600px) {
+      .back-btn {
+        top: 15px;
+        left: 15px;
+        padding: 8px 15px;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
 </head>
 
 <body class="container">
-  <audio src="sound\carol.mp3" autoplay></audio>
-  <div id="lyrics">
 
-  </div>
+  <a href="index.html" class="back-btn">
+    &#8592; Voltar
+  </a>
+
+  <audio src="assets\flor.mp3" autoplay></audio>
+  <div id="lyrics"></div>
 
   <h1 class="titulo">.</h1>
   <div class="night"></div>
+
   <div class="flowers">
     <div class="flower flower--1">
       <div class="flower__leafs flower__leafs--1">

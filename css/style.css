@@ -1,16 +1,15 @@
 :root {
-    --bg-color: #f3e5f5;
-    /* Lavender - Soft and romantic */
-    --glass-bg: rgba(255, 255, 255, 0.6);
-    --glass-border: rgba(255, 255, 255, 0.8);
-    --text-primary: #4a148c;
-    /* Deep Purple */
-    --text-secondary: #7b1fa2;
-    /* Purple */
-    --accent-color: #d500f9;
-    /* Vibrant Purple/Pink */
-    --accent-hover: #aa00ff;
+    /* Paleta de Cores Dark Romantic */
+    --primary-color: #dba1e7;
+    /* Roxo claro */
+    --accent-color: #ff80eb;
+    /* Rosa neon suave */
+    --text-color: #f3e5f5;
+    /* Texto quase branco */
+
+    /* Fontes */
     --font-heading: 'Playfair Display', serif;
+    --font-script: 'Dancing Script', cursive;
     --font-body: 'Inter', sans-serif;
 }
 
@@ -22,183 +21,278 @@
 
 body {
     font-family: var(--font-body);
-    background-color: var(--bg-color);
-    color: var(--text-primary);
+    color: var(--text-color);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
+    background-color: #0a0015;
+    /* Fundo base escuro */
+
+    /* --- FUNDO DE ONDAS DE LUZ (CSS Puro) --- */
     background-image:
-        radial-gradient(circle at 10% 20%, rgba(243, 229, 245, 1) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(225, 190, 231, 1) 0%, transparent 40%);
+        /* Camada 1: Luz rosa superior */
+        radial-gradient(ellipse 100% 40% at 0% 20%, rgba(255, 0, 200, 0.2) 0%, transparent 60%),
+        /* Camada 2: Luz roxa direita */
+        radial-gradient(ellipse 80% 50% at 100% 50%, rgba(130, 0, 255, 0.25) 0%, transparent 50%),
+        /* Camada 3: Luz azulada inferior */
+        radial-gradient(ellipse 120% 60% at 50% 110%, rgba(40, 50, 255, 0.3) 0%, transparent 70%),
+        /* Camada 4: Brilho ambiente */
+        radial-gradient(circle at 90% 10%, rgba(255, 100, 250, 0.15) 0%, transparent 40%),
+        /* Camada 5: Sombra central para profundidade */
+        radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.7) 100%),
+        /* Camada 6: Gradiente linear base */
+        linear-gradient(160deg, #1a002e 0%, #000000 100%);
+
+    background-attachment: fixed;
+    background-size: 100% 100%;
 }
 
-/* Header */
+/* --- CABEÇALHO --- */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2rem 5%;
+    padding: 1.2rem 5%;
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 100;
-    backdrop-filter: blur(5px);
-    background: rgba(243, 229, 245, 0.5);
+    background: rgba(30, 0, 50, 0.3);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .logo {
     font-family: var(--font-heading);
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    letter-spacing: 1px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-color);
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 10px rgba(213, 0, 249, 0.3);
 }
 
 nav ul {
     display: flex;
     list-style: none;
-    gap: 3rem;
+    gap: 2.5rem;
 }
 
 nav a {
     text-decoration: none;
-    color: var(--text-primary);
-    font-size: 0.95rem;
-    font-weight: 500;
+    color: var(--text-color);
+    font-size: 0.85rem;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
-    transition: color 0.3s ease;
-    position: relative;
-}
-
-nav a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 1px;
-    bottom: -5px;
-    left: 0;
-    background-color: var(--accent-color);
-    transition: width 0.3s ease;
+    transition: all 0.3s ease;
+    opacity: 0.8;
 }
 
 nav a:hover {
     color: var(--accent-color);
+    opacity: 1;
+    text-shadow: 0 0 10px rgba(255, 128, 235, 0.5);
 }
 
-nav a:hover::after {
-    width: 100%;
-}
-
-/* Main Content */
+/* --- CONTEÚDO PRINCIPAL --- */
 main {
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0 5%;
-    margin-top: 80px;
-    /* Offset for fixed header */
+    position: relative;
+    z-index: 10;
 }
 
 .hero-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* --- CARTÃO DE VIDRO (Central) --- */
+.glass-card {
+    background: rgba(255, 255, 255, 0.06);
+    /* Transparência sutil */
+    backdrop-filter: blur(25px);
+    /* Efeito de vidro fosco forte */
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 4rem 3rem;
+    border-radius: 24px;
     text-align: center;
-    max-width: 800px;
-    animation: fadeInUp 1.2s ease-out;
+    max-width: 700px;
+    width: 100%;
+    box-shadow:
+        0 30px 60px rgba(0, 0, 0, 0.5),
+        inset 0 0 20px rgba(255, 255, 255, 0.05);
+    animation: fadeUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .hero-title {
     font-family: var(--font-heading);
-    font-size: 5rem;
-    line-height: 1.1;
-    margin-bottom: 1.5rem;
-    color: var(--text-primary);
+    font-size: 4.5rem;
+    line-height: 1;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    text-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
-.hero-title span {
+/* Fonte manuscrita */
+.hero-title .handwritten {
     display: block;
-    font-style: italic;
+    font-family: var(--font-script);
+    font-size: 0.6em;
     color: var(--accent-color);
     font-weight: 400;
+    margin-top: 5px;
+    letter-spacing: 0;
+    transform: rotate(-3deg);
+    text-shadow: 0 2px 15px rgba(213, 0, 249, 0.5);
 }
 
 .hero-subtitle {
-    font-size: 1.2rem;
-    color: var(--text-secondary);
-    margin-bottom: 3rem;
-    font-weight: 300;
-    letter-spacing: 0.5px;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+    line-height: 1.6;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
+/* --- CONTADOR DE TEMPO (TIMER) --- */
+#love-timer {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.time-box {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    min-width: 75px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.time-box:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-color);
+    box-shadow: 0 8px 25px rgba(213, 0, 249, 0.2);
+}
+
+.time-number {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    line-height: 1;
+    margin-bottom: 5px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.time-label {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* --- BOTÃO PRINCIPAL (CTA) --- */
 .cta-button {
     display: inline-block;
-    padding: 1rem 3rem;
-    border: 1px solid var(--text-primary);
-    background: transparent;
-    color: var(--text-primary);
+    padding: 1rem 3.5rem;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #d500f9 0%, #7c4dff 100%);
+    color: white;
     font-family: var(--font-body);
-    font-size: 0.9rem;
+    font-weight: 600;
+    font-size: 0.95rem;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    letter-spacing: 1.5px;
     text-decoration: none;
+    box-shadow: 0 10px 30px rgba(124, 77, 255, 0.4);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .cta-button:hover {
-    background: var(--text-primary);
-    color: #fff;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(213, 0, 249, 0.6);
+    filter: brightness(1.2);
 }
 
-/* Floating Elements */
+/* --- DECORAÇÕES (Luzes de Fundo) --- */
 .decoration {
     position: absolute;
-    pointer-events: none;
-    z-index: -1;
-    opacity: 0.6;
+    border-radius: 50%;
+    filter: blur(120px);
+    z-index: 0;
+    opacity: 0.25;
+    /* Suave para não brigar com o gradiente */
+    animation: float 18s infinite ease-in-out;
 }
 
 .circle-1 {
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    background: linear-gradient(45deg, #e1bee7, #f3e5f5);
-    top: 15%;
-    left: 10%;
-    filter: blur(40px);
-    animation: float 8s infinite ease-in-out;
+    width: 600px;
+    height: 600px;
+    background: #d500f9;
+    top: -25%;
+    left: -25%;
+    animation-delay: 0s;
 }
 
 .circle-2 {
+    width: 700px;
+    height: 700px;
+    background: #651fff;
+    bottom: -35%;
+    right: -25%;
+    animation-delay: -6s;
+    animation-direction: reverse;
+}
+
+.circle-3 {
     width: 400px;
     height: 400px;
-    border-radius: 50%;
-    background: linear-gradient(45deg, #d1c4e9, #fff);
-    bottom: 10%;
+    background: #ff4081;
+    top: 30%;
     right: 5%;
-    filter: blur(50px);
-    animation: float 10s infinite ease-in-out reverse;
+    animation-delay: -10s;
+    opacity: 0.2;
 }
 
 @keyframes float {
 
     0%,
     100% {
-        transform: translateY(0);
+        transform: translate(0, 0) scale(1);
     }
 
     50% {
-        transform: translateY(-20px);
+        transform: translate(40px, -20px) scale(1.05);
     }
 }
 
-@keyframes fadeInUp {
+@keyframes fadeUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(40px);
     }
 
     to {
@@ -207,7 +301,7 @@ main {
     }
 }
 
-/* Video Intro Overlay */
+/* --- OVERLAY DE VÍDEO --- */
 #intro-overlay {
     position: fixed;
     top: 0;
@@ -219,7 +313,12 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: opacity 2s ease, filter 2s ease;
+    transition: opacity 1.5s ease, visibility 1.5s;
+}
+
+#intro-overlay.fade-out {
+    opacity: 0;
+    visibility: hidden;
 }
 
 #intro-video {
@@ -228,27 +327,87 @@ main {
     object-fit: cover;
 }
 
-#intro-overlay.fade-out {
-    opacity: 0;
-    filter: blur(20px);
-    pointer-events: none;
+#skip-btn {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    padding: 10px 24px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: white;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-radius: 30px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s;
+    z-index: 10001;
+}
+
+#skip-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
 }
 
 #unmute-btn {
     position: absolute;
     bottom: 50px;
-    padding: 10px 20px;
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid white;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     color: white;
-    font-family: var(--font-body);
+    padding: 10px 20px;
+    border-radius: 30px;
     cursor: pointer;
-    border-radius: 5px;
-    backdrop-filter: blur(5px);
-    z-index: 10000;
-    transition: background 0.3s;
+    z-index: 10001;
 }
 
-#unmute-btn:hover {
-    background: rgba(255, 255, 255, 0.4);
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 768px) {
+
+    /* Ajuste de fundo para performance no mobile */
+    body {
+        background-image:
+            radial-gradient(ellipse at 0% 20%, rgba(255, 0, 200, 0.2) 0%, transparent 60%),
+            radial-gradient(ellipse at 100% 80%, rgba(40, 50, 255, 0.3) 0%, transparent 70%),
+            linear-gradient(160deg, #1a002e 0%, #000000 100%);
+    }
+
+    .glass-card {
+        padding: 3rem 1.5rem;
+        width: 90%;
+        margin-top: 20px;
+        /* Espaço extra do topo */
+    }
+
+    .hero-title {
+        font-size: 3rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.95rem;
+    }
+
+    #love-timer {
+        gap: 0.5rem;
+    }
+
+    .time-box {
+        min-width: 60px;
+        padding: 0.6rem;
+    }
+
+    .time-number {
+        font-size: 1.4rem;
+    }
+
+    .time-label {
+        font-size: 0.6rem;
+    }
+
+    .circle-1,
+    .circle-2,
+    .circle-3 {
+        opacity: 0.2;
+        transform: scale(0.6);
+    }
 }
