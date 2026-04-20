@@ -400,30 +400,49 @@
     @media (max-width: 900px) {
       .navbar {
         flex-direction: column;
-        gap: 20px;
-        padding: 20px;
+        gap: 15px;
+        padding: 20px 10px;
         position: relative;
       }
 
+      .nav-links {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .nav-links a {
+        font-size: 0.75em;
+        letter-spacing: 1px;
+      }
+
       .hero {
-        padding-top: 40px;
+        padding-top: 20px;
       }
 
       .hero h1 {
-        font-size: 4.5em;
+        font-size: 3.5em;
+        flex-direction: column;
       }
 
       .description {
-        font-size: 1.1em;
+        font-size: 1em;
+        padding: 0 10px;
+      }
+
+      .counter-box {
+        gap: 10px;
       }
 
       .time-unit {
-        width: 110px;
+        flex: 1 1 40%; /* Cria um grid 2x2 elegante no celular */
+        min-width: 110px;
+        max-width: 140px;
         padding: 15px 10px;
       }
 
       .number {
-        font-size: 2.8em;
+        font-size: 2.5em;
       }
     }
   </style>
