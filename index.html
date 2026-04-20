@@ -1,376 +1,526 @@
 <!doctype html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>alice & Eu</title>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      rel="stylesheet"
-    />
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&display=swap");
 
-      :root {
-        --primary-color: #d86bf3;
-        --bg-gradient: radial-gradient(
-          circle at center,
-          #2e1045 0%,
-          #0f0518 100%
-        );
-        --glass-bg: rgba(255, 255, 255, 0.08);
-        --glass-border: rgba(255, 255, 255, 0.2);
-        --white: #ffffff;
-        --text-shadow: 0 0 15px rgba(216, 107, 243, 0.6);
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Camila & Denison</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@300;400;600&display=swap");
+
+    :root {
+      --pink-neon: #f43f8d;
+      --pink-light: #ffb6c1;
+      --pink-dark: #8c1c5a;
+      --bg-gradient: radial-gradient(circle at center, #2e0836 0%, #0a010d 100%);
+      --glass-bg: rgba(20, 0, 30, 0.4);
+      --glass-border: rgba(244, 63, 141, 0.3);
+      --white: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Playfair Display", serif;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Fake Background Image (Silhouette) Effect */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('assets/fundo.png') no-repeat center center;
+      background-size: cover;
+      opacity: 0.15;
+      /* Subtly blending the couple silhouette */
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    /* --- VIDEO INTRO OVERLAY --- */
+    #intro-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 1.5s ease, visibility 1.5s;
+    }
+
+    #intro-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #intro-overlay.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    #skip-btn {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      padding: 10px 24px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: white;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 30px;
+      backdrop-filter: blur(10px);
+      z-index: 10001;
+      transition: all 0.3s ease;
+    }
+
+    #skip-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+
+    /* --- FUNDO DE CORAÇÕES --- */
+    .hearts-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .heart {
+      position: absolute;
+      top: -10%;
+      animation: fall linear forwards;
+      filter: drop-shadow(0 0 8px rgba(244, 63, 141, 0.8));
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg) scale(0.5);
+        opacity: 1;
       }
 
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: "Montserrat", sans-serif;
-        background: var(--bg-gradient);
-        color: var(--white);
-        min-height: 100vh;
-        overflow-x: hidden;
-        display: flex;
-        flex-direction: column;
-      }
-
-      /* --- VIDEO INTRO OVERLAY --- */
-      #intro-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #000;
-        z-index: 9999;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition:
-          opacity 1.5s ease,
-          visibility 1.5s;
-      }
-
-      #intro-video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      #intro-overlay.fade-out {
+      100% {
+        transform: translateY(110vh) rotate(360deg) scale(1.2);
         opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
+      }
+    }
+
+    /* --- NAVBAR --- */
+    .navbar {
+      width: 100%;
+      padding: 25px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      position: absolute;
+      top: 0;
+    }
+
+    .logo {
+      font-family: "Great Vibes", cursive;
+      font-size: 2.8em;
+      color: var(--white);
+      text-decoration: none;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-heart {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.6em;
+      font-style: normal;
+      font-weight: 300;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+    }
+
+    .nav-links a {
+      font-family: "Montserrat", sans-serif;
+      text-decoration: none;
+      color: var(--white);
+      font-size: 0.8em;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      position: relative;
+      padding: 5px 0;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--pink-light);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 1px;
+      background: var(--pink-neon);
+      bottom: 0;
+      left: 0;
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* --- CONTEÚDO PRINCIPAL --- */
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      text-align: center;
+      padding: 100px 20px 20px 20px;
+    }
+
+    .subtitle {
+      font-size: 1.1em;
+      color: var(--white);
+      margin-bottom: 5px;
+      letter-spacing: 1px;
+      font-weight: 300;
+    }
+
+    .hero h1 {
+      font-family: "Great Vibes", cursive;
+      font-size: min(10vw, 6.5em);
+      font-weight: 400;
+      margin: 0;
+      color: var(--white);
+      text-shadow: 0 0 20px rgba(244, 63, 141, 0.8), 0 0 40px rgba(244, 63, 141, 0.4);
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .title-heart {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.4em;
+      font-weight: 300;
+    }
+
+    .description {
+      font-size: 1.2em;
+      color: #f0e6f5;
+      margin-top: 5px;
+      font-weight: 300;
+    }
+
+    .highlight {
+      color: var(--pink-neon);
+      font-weight: 600;
+    }
+
+    .divider {
+      margin: 15px 0 25px 0;
+      color: var(--pink-neon);
+      font-style: italic;
+      font-size: 1.1em;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      opacity: 0.9;
+    }
+
+    .divider .sparkle {
+      font-size: 0.8em;
+    }
+
+    .divider .line {
+      font-style: normal;
+      letter-spacing: -2px;
+    }
+
+    /* --- CONTADOR --- */
+    .counter-box {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .time-unit {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      padding: 15px 15px;
+      border-radius: 16px;
+      width: 130px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 25px rgba(244, 63, 141, 0.15), inset 0 0 15px rgba(244, 63, 141, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .time-unit:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 35px rgba(244, 63, 141, 0.3), inset 0 0 20px rgba(244, 63, 141, 0.1);
+    }
+
+    .time-unit .icon {
+      color: var(--pink-light);
+      font-size: 0.9em;
+      margin-bottom: 2px;
+    }
+
+    .number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.2em;
+      font-weight: 600;
+      line-height: 1.1;
+      color: var(--white);
+      text-shadow: 0 0 15px rgba(244, 63, 141, 0.7);
+    }
+
+    .label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7em;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--white);
+      margin-top: 5px;
+    }
+
+    .sub-label {
+      font-style: italic;
+      font-size: 0.9em;
+      color: var(--pink-neon);
+      margin-top: 3px;
+    }
+
+    /* --- BOTÃO SURPRESA --- */
+    .btn-surprise {
+      margin-top: 5px;
+      padding: 14px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 0.9em;
+      letter-spacing: 1px;
+      background: linear-gradient(to right, #e22b7a, #fc5c9c);
+      color: white;
+      box-shadow: 0 0 30px rgba(244, 63, 141, 0.6);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-surprise:hover {
+      box-shadow: 0 0 50px rgba(244, 63, 141, 0.9);
+      transform: scale(1.05);
+    }
+
+    /* --- FOOTER NOTE --- */
+    .footer-note {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .footer-note p {
+      font-size: 0.95em;
+      color: #e0d0e6;
+      font-weight: 300;
+    }
+
+    .footer-note span {
+      color: var(--pink-neon);
+      font-weight: 400;
+    }
+
+    .footer-note i {
+      color: var(--pink-neon);
+      font-size: 1.8em;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      20%,
+      50%,
+      80%,
+      100% {
+        transform: translateY(0);
       }
 
-      /* Botão Pular Intro */
-      #skip-btn {
-        position: absolute;
-        top: 30px;
-        right: 30px;
-        padding: 10px 24px;
-        background: rgba(255, 255, 255, 0.15);
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        color: white;
-        font-family: "Montserrat", sans-serif;
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        cursor: pointer;
-        border-radius: 30px;
-        backdrop-filter: blur(10px);
-        z-index: 10001;
-        transition: all 0.3s ease;
+      40% {
+        transform: translateY(-10px);
       }
 
-      #skip-btn:hover {
-        background: rgba(255, 255, 255, 0.3);
-        transform: scale(1.05);
+      60% {
+        transform: translateY(-5px);
       }
+    }
 
-      /* --- FUNDO DE CORAÇÕES --- */
-      .hearts-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-        pointer-events: none;
-      }
-
-      .heart {
-        position: absolute;
-        top: -10%;
-        animation: fall linear forwards;
-        filter: drop-shadow(0 0 5px rgba(255, 192, 203, 0.8));
-      }
-
-      @keyframes fall {
-        0% {
-          transform: translateY(-10vh) rotate(0deg) translateX(0);
-          opacity: 1;
-        }
-
-        100% {
-          transform: translateY(110vh) rotate(360deg) translateX(20px);
-          opacity: 0;
-        }
-      }
-
-      /* --- NAVBAR --- */
+    @media (max-width: 900px) {
       .navbar {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        padding: 20px 50px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        z-index: 100;
-        background: rgba(15, 5, 24, 0.3);
-        backdrop-filter: blur(8px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      }
-
-      .logo {
-        font-family: "Dancing Script", cursive;
-        font-size: 2.2em;
-        color: var(--white);
-        text-decoration: none;
-        text-shadow: var(--text-shadow);
-      }
-
-      .nav-links {
-        display: flex;
-        gap: 30px;
-      }
-
-      .nav-links a {
-        text-decoration: none;
-        color: var(--white);
-        font-size: 0.9em;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        position: relative;
-        padding: 5px 0;
-        transition: 0.3s;
-      }
-
-      .nav-links a:hover {
-        color: var(--primary-color);
-      }
-
-      /* --- CONTEÚDO PRINCIPAL --- */
-      .hero {
-        flex: 1;
-        display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        z-index: 10;
-        text-align: center;
-        padding: 120px 20px 20px 20px;
+        gap: 20px;
+        padding: 20px;
+        position: relative;
+      }
+
+      .hero {
+        padding-top: 40px;
       }
 
       .hero h1 {
-        font-family: "Dancing Script", cursive;
-        font-size: 5.5em;
-        margin: 0;
-        background: linear-gradient(to right, #ffffff, #ffccff);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        text-shadow: 0 0 30px rgba(216, 107, 243, 0.4);
-        animation: float 4s ease-in-out infinite;
+        font-size: 4.5em;
       }
 
-      .hero p {
-        font-size: 1.3em;
-        margin-top: 10px;
-        margin-bottom: 50px;
-        color: #e0d0e6;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-      }
-
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-
-        50% {
-          transform: translateY(-15px);
-        }
-      }
-
-      /* --- CONTADOR --- */
-      .counter-box {
-        display: flex;
-        gap: 25px;
-        margin-bottom: 60px;
-        flex-wrap: wrap;
-        justify-content: center;
+      .description {
+        font-size: 1.1em;
       }
 
       .time-unit {
-        background: var(--glass-bg);
-        border: 1px solid var(--glass-border);
-        padding: 25px 20px;
-        border-radius: 20px;
         width: 110px;
-        backdrop-filter: blur(12px);
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        transition: transform 0.3s;
-      }
-
-      .time-unit:hover {
-        transform: translateY(-10px);
-        background: rgba(255, 255, 255, 0.15);
+        padding: 15px 10px;
       }
 
       .number {
         font-size: 2.8em;
-        font-weight: 700;
-        color: var(--white);
       }
+    }
+  </style>
+</head>
 
-      .label {
-        font-size: 0.75em;
-        text-transform: uppercase;
-        color: #ffccff;
-        margin-top: 5px;
-      }
+<body>
+  <div id="intro-overlay">
+    <video id="intro-video" playsinline muted autoplay>
+      <source src="aliceh.mp4" type="video/mp4" />
+    </video>
+    <button id="skip-btn">Pular Intro ⏭</button>
+  </div>
 
-      /* --- BOTÃO SURPRESA --- */
-      .btn-primary {
-        padding: 18px 50px;
-        border-radius: 50px;
-        text-decoration: none;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        background: linear-gradient(135deg, #a044ff, #d86bf3);
-        color: white;
-        box-shadow: 0 0 20px rgba(160, 68, 255, 0.5);
-        transition: 0.3s;
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-      }
+  <div class="hearts-container" id="hearts-container"></div>
 
-      .btn-primary:hover {
-        box-shadow: 0 0 40px rgba(216, 107, 243, 0.8);
-        transform: scale(1.05);
-      }
+  <nav class="navbar">
+    <div class="logo-container">
+      <a href="#" class="logo">Camila & Denison <span class="logo-heart">♡</span></a>
+    </div>
+    <div class="nav-links">
+      <a href="livro.html">HISTÓRIA</a>
+      <a href="universo.html">UNIVERSO</a>
+      <a href="galaxia.html">GALAXIA</a>
+    </div>
+  </nav>
 
-      @media (max-width: 768px) {
-        .navbar {
-          flex-direction: column;
-          gap: 15px;
-          position: absolute;
-          background: transparent;
-        }
+  <section class="hero">
+    <p class="subtitle">♡ Para a mulher que mudou minha vida ♡</p>
 
-        .nav-links {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          align-items: center;
-        }
+    <h1>Minha princesa <span class="title-heart">♡</span></h1>
 
-        .hero {
-          padding-top: 200px;
-        }
+    <p class="description">Cada segundo ao seu lado é o <span class="highlight">melhor capítulo</span> da minha vida.
+    </p>
 
-        .hero h1 {
-          font-size: 3.5em;
-        }
-
-        .time-unit {
-          width: 75px;
-          padding: 15px 5px;
-        }
-
-        .number {
-          font-size: 1.8em;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <div id="intro-overlay">
-      <video id="intro-video" playsinline muted autoplay>
-        <source src="aliceh.mp4" type="video/mp4" />
-      </video>
-      <button id="skip-btn">Pular Intro ⏭</button>
+    <div class="divider">
+      <span class="sparkle">✦</span> Desde o dia em que nossos caminhos se cruzaram... <span class="line">─</span>
     </div>
 
-    <div class="hearts-container" id="hearts-container"></div>
-
-    <nav class="navbar">
-      <a href="#" class="logo">alice & Thiago</a>
-      <div class="nav-links">
-        <a href="livro.html">História</a>
-        <a href="universo.html">Universo</a>
-        <a href="galaxia.html">Galaxia</a>
+    <div class="counter-box">
+      <div class="time-unit">
+        <div class="icon">♥</div>
+        <span class="number" id="days">00</span>
+        <span class="label">DIAS</span>
+        <span class="sub-label">te amando</span>
       </div>
-    </nav>
-
-    <section class="hero">
-      <h1>Minha Essência</h1>
-      <p>Juntos construindo nossa história há:</p>
-
-      <div class="counter-box">
-        <div class="time-unit">
-          <span class="number" id="days">00</span>
-          <span class="label">Dias</span>
-        </div>
-        <div class="time-unit">
-          <span class="number" id="hours">00</span>
-          <span class="label">Horas</span>
-        </div>
-        <div class="time-unit">
-          <span class="number" id="minutes">00</span>
-          <span class="label">Min</span>
-        </div>
-        <div class="time-unit">
-          <span class="number" id="seconds">00</span>
-          <span class="label">Seg</span>
-        </div>
+      <div class="time-unit">
+        <div class="icon">★</div>
+        <span class="number" id="hours">00</span>
+        <span class="label">HORAS</span>
+        <span class="sub-label">ao seu lado</span>
       </div>
+      <div class="time-unit">
+        <div class="icon">♥</div>
+        <span class="number" id="minutes">00</span>
+        <span class="label">MINUTOS</span>
+        <span class="sub-label">de felicidade</span>
+      </div>
+      <div class="time-unit">
+        <div class="icon">♥</div>
+        <span class="number" id="seconds">00</span>
+        <span class="label">SEGUNDOS</span>
+        <span class="sub-label">de nós</span>
+      </div>
+    </div>
 
-      <a href="flower.html" class="btn-primary">
-        <i class="fas fa-gift"></i> Uma flor para minha flor
-      </a>
-    </section>
+    <a href="flower.html" class="btn-surprise">
+      <i class="fas fa-gift"></i> UMA SURPRESA PRA VOCÊ
+    </a>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        // --- 1. LÓGICA DO VÍDEO INTRO ---
-        const video = document.getElementById("intro-video");
-        const overlay = document.getElementById("intro-overlay");
-        const skipBtn = document.getElementById("skip-btn");
+    <div class="footer-note">
+      <p>♡ Clique e veja o quanto meu <span>amor</span> por você é infinito ♡</p>
+      <i class="fas fa-angle-down"></i>
+    </div>
+  </section>
 
-        function closeIntro() {
-          video.pause();
-          overlay.classList.add("fade-out");
-          setTimeout(() => {
-            overlay.style.display = "none";
-          }, 1500); // Tempo da transição
-        }
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // --- 1. LÓGICA DO VÍDEO INTRO ---
+      const video = document.getElementById("intro-video");
+      const overlay = document.getElementById("intro-overlay");
+      const skipBtn = document.getElementById("skip-btn");
 
-        // Tenta dar play
+      function closeIntro() {
+        video.pause();
+        overlay.classList.add("fade-out");
+        setTimeout(() => {
+          overlay.style.display = "none";
+        }, 1500);
+      }
+
+      // Verifica se já tocou nesta sessão do navegador
+      if (sessionStorage.getItem('introPlayed') === 'true') {
+        overlay.style.display = "none";
+        video.pause();
+      } else {
+        sessionStorage.setItem('introPlayed', 'true');
+
         const playPromise = video.play();
         if (playPromise !== undefined) {
           playPromise.catch((error) => {
@@ -378,71 +528,67 @@
           });
         }
 
-        // Se clicar no vídeo, ativa o som
         video.addEventListener("click", () => {
           video.muted = !video.muted;
         });
 
         skipBtn.addEventListener("click", closeIntro);
         video.addEventListener("ended", closeIntro);
+      }
 
-        // --- 2. CONTADOR DE TEMPO ---
-        // DATA ATUALIZADA: 28 de Setembro de 2025
-        // Formato: Ano, Mês (Janeiro=0, Setembro=8), Dia
-        const startDate = new Date(2025, 8, 28, 0, 0, 0);
+      // --- 2. CONTADOR DE TEMPO ---
+      // Data base: 28 de Setembro de 2025
+      const startDate = new Date(2025, 8, 28, 0, 0, 0);
 
-        function updateCounter() {
-          const now = new Date();
-          const diff = now - startDate;
+      function updateCounter() {
+        const now = new Date();
+        const diff = now - startDate;
 
-          // Se a data for no futuro, mostra zeros ou calcula contagem regressiva?
-          // Assumindo que você quer ver o tempo CORRIDO, se a data for futura, pode dar negativo.
-          // Vou colocar um Math.abs para mostrar a diferença absoluta caso a data seja futura.
+        const days = Math.floor(Math.abs(diff) / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((Math.abs(diff) / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((Math.abs(diff) / 1000 / 60) % 60);
+        const seconds = Math.floor((Math.abs(diff) / 1000) % 60);
 
-          const days = Math.floor(Math.abs(diff) / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((Math.abs(diff) / (1000 * 60 * 60)) % 24);
-          const minutes = Math.floor((Math.abs(diff) / 1000 / 60) % 60);
-          const seconds = Math.floor((Math.abs(diff) / 1000) % 60);
+        document.getElementById("days").innerText = days; // Sem zero à esquerda para ficar igual à imagem
+        document.getElementById("hours").innerText = hours;
+        document.getElementById("minutes").innerText = minutes;
+        document.getElementById("seconds").innerText = seconds;
+      }
+      setInterval(updateCounter, 1000);
+      updateCounter();
 
-          document.getElementById("days").innerText =
-            days < 10 ? "0" + days : days;
-          document.getElementById("hours").innerText =
-            hours < 10 ? "0" + hours : hours;
-          document.getElementById("minutes").innerText =
-            minutes < 10 ? "0" + minutes : minutes;
-          document.getElementById("seconds").innerText =
-            seconds < 10 ? "0" + seconds : seconds;
-        }
-        setInterval(updateCounter, 1000);
-        updateCounter();
+      // --- 3. CHUVA DE CORAÇÕES E PARTÍCULAS ---
+      function createHeart() {
+        const heart = document.createElement("div");
+        const container = document.getElementById("hearts-container");
+        heart.classList.add("heart");
 
-        // --- 3. CHUVA DE CORAÇÕES ---
-        function createHeart() {
-          const heart = document.createElement("div");
-          const container = document.getElementById("hearts-container");
-          heart.classList.add("heart");
-          heart.innerHTML = "&#10084;";
-          heart.style.left = Math.random() * 100 + "vw";
-          const size = Math.random() * 1.5 + 0.8;
-          heart.style.fontSize = size + "rem";
+        // Misturar corações e pontos de luz
+        const isHeart = Math.random() > 0.5;
+        heart.innerHTML = isHeart ? "&#10084;" : "&#10022;"; // Coração ou brilho
 
-          const colors = [
-            "rgba(255,255,255,0.3)",
-            "rgba(255,182,193,0.5)",
-            "rgba(221,160,221,0.5)",
-          ];
-          heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+        heart.style.left = Math.random() * 100 + "vw";
+        const size = Math.random() * 1.2 + 0.5;
+        heart.style.fontSize = size + "rem";
 
-          const duration = Math.random() * 3 + 4;
-          heart.style.animationDuration = duration + "s";
+        const colors = [
+          "rgba(255, 182, 193, 0.4)",
+          "rgba(244, 63, 141, 0.4)",
+          "rgba(255, 255, 255, 0.3)",
+        ];
+        heart.style.color = colors[Math.floor(Math.random() * colors.length)];
 
-          container.appendChild(heart);
-          setTimeout(() => {
-            heart.remove();
-          }, duration * 1000);
-        }
-        setInterval(createHeart, 300);
-      });
-    </script>
-  </body>
+        const duration = Math.random() * 4 + 5; // Mais lento
+        heart.style.animationDuration = duration + "s";
+
+        container.appendChild(heart);
+        setTimeout(() => {
+          heart.remove();
+        }, duration * 1000);
+      }
+      setInterval(createHeart, 200); // Mais partículas
+    });
+  </script>
+</body>
+
 </html>

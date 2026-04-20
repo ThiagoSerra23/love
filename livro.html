@@ -1,535 +1,714 @@
 <!doctype html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Para alice - O Livro do Meu Amor</title>
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap");
 
-      :root {
-        --roxo-escuro-capa: #3a1c3a;
-        --roxo-botao: #6b3a8c;
-        --roxo-marcador: #8e44ad;
-        --branco-ornamento: #f0f0f0;
-        --branco-papel: #fffaf0;
-        --preto-texto: #2c1a2c;
-        --dourado-bordas: #cfa95f;
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para Camila - O livro da minha princesa</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400&display=swap");
+
+    :root {
+      --roxo-fundo: #150616;
+      --roxo-brilho: #270b24;
+      --roxo-capa: #2c0b2d;
+      --roxo-lombada: #1a061b;
+      --dourado: #d2a472;
+      --dourado-claro: #ebd1b0;
+      --branco-papel: #fbf7f0;
+      --preto-texto: #2c1a2c;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, var(--roxo-brilho) 0%, var(--roxo-fundo) 100%);
+      font-family: "Playfair Display", serif;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Partículas sutis ao fundo */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      color: rgba(235, 209, 176, 0.1);
+      font-size: 0.6rem;
+      animation: float 10s infinite linear;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(110vh) rotate(0deg);
+        opacity: 0;
       }
 
-      body {
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background: radial-gradient(circle at center, #4a2c4a, #240f24);
-        font-family: "Playfair Display", serif;
-        overflow: hidden;
-        position: relative;
-        /* Necessário para o botão voltar absoluto */
+      10% {
+        opacity: 1;
       }
 
-      /* --- BOTÃO VOLTAR (ADICIONADO) --- */
-      .back-btn {
-        position: absolute;
-        top: 25px;
-        left: 25px;
-        text-decoration: none;
-        color: rgba(255, 255, 255, 0.8);
-        font-family: "Playfair Display", serif;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        padding: 10px 25px;
-        border-radius: 30px;
-        transition: all 0.3s ease;
-        z-index: 1000;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        text-transform: uppercase;
-        font-size: 0.9rem;
-        letter-spacing: 1px;
-        background: rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(2px);
+      90% {
+        opacity: 1;
       }
 
-      .back-btn:hover {
-        background: white;
-        color: #1a0024;
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-        transform: translateX(5px);
-        border-color: white;
+      100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
       }
+    }
 
-      /* --- ESTÁGIO 3D --- */
+    /* --- BOTÃO VOLTAR TOP-LEFT --- */
+    .back-btn {
+      position: absolute;
+      top: 30px;
+      left: 40px;
+      text-decoration: none;
+      color: var(--dourado-claro);
+      font-family: "Montserrat", sans-serif;
+      font-weight: 300;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: 1px solid rgba(210, 164, 114, 0.4);
+      padding: 12px 25px;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .back-btn:hover {
+      background: rgba(210, 164, 114, 0.1);
+      border-color: var(--dourado-claro);
+      transform: translateY(-2px);
+    }
+
+    /* --- ESTÁGIO 3D --- */
+    .book-stage {
+      perspective: 2000px;
+      width: 90%;
+      max-width: 400px;
+      height: 560px;
+      position: relative;
+      transform: translateY(-10px);
+      z-index: 10;
+    }
+
+    .book {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      background-color: var(--roxo-lombada);
+      border-radius: 4px 10px 10px 4px;
+      box-shadow: 20px 20px 40px rgba(0, 0, 0, 0.7), inset 5px 0 15px rgba(0, 0, 0, 0.5);
+      transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+    }
+
+    .paper {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      transform-origin: left center;
+      transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+      transform-style: preserve-3d;
+      border-radius: 2px 8px 8px 2px;
+    }
+
+    /* --- MIOLO --- */
+    .page-content {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-color: var(--branco-papel);
+      backface-visibility: hidden;
+      padding: 40px 30px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: var(--preto-texto);
+      border-radius: 2px 8px 8px 2px;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .front {
+      z-index: 2;
+      border-left: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .back {
+      z-index: 1;
+      transform: rotateY(180deg);
+      border-right: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .paper.flipped {
+      transform: rotateY(-180deg);
+    }
+
+    /* --- CAPA REALISTA --- */
+    .cover-style {
+      background: linear-gradient(135deg, #370c38, #1e051f);
+      color: var(--dourado-claro);
+      padding: 20px;
+      box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.6), inset -5px 0 10px rgba(255, 255, 255, 0.03);
+      border-radius: 3px 12px 12px 3px;
+      border-left: none;
+    }
+
+    /* Relevo da Lombada */
+    .cover-style::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 10px;
+      width: 8px;
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.4));
+      border-radius: 2px;
+    }
+
+    .ornate-frame {
+      width: 100%;
+      height: 100%;
+      border: 1px solid rgba(210, 164, 114, 0.4);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    /* Cantoneiras douradas simuladas */
+    .ornate-frame::before,
+    .ornate-frame::after {
+      content: '';
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      border: 1px solid var(--dourado);
+    }
+
+    .ornate-frame::before {
+      top: 5px;
+      left: 5px;
+      border-right: none;
+      border-bottom: none;
+    }
+
+    .ornate-frame::after {
+      bottom: 5px;
+      right: 5px;
+      border-left: none;
+      border-top: none;
+    }
+
+    .corner-tr,
+    .corner-bl {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      border: 1px solid var(--dourado);
+    }
+
+    .corner-tr {
+      top: 5px;
+      right: 5px;
+      border-left: none;
+      border-bottom: none;
+    }
+
+    .corner-bl {
+      bottom: 5px;
+      left: 5px;
+      border-right: none;
+      border-top: none;
+    }
+
+    /* Textos da Capa */
+    .top-ornament {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6em;
+      margin-bottom: 30px;
+      color: var(--dourado);
+    }
+
+    .title-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 40px;
+    }
+
+    .main-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 400;
+      font-size: 2.2em;
+      letter-spacing: 5px;
+      margin: 0;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+    }
+
+    .divider-line {
+      width: 30%;
+      height: 1px;
+      background: rgba(210, 164, 114, 0.5);
+      margin-bottom: 25px;
+    }
+
+    .sub-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.6em;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-weight: 300;
+      margin-bottom: 30px;
+    }
+
+    .bottom-heart {
+      font-size: 1.1em;
+      font-weight: 300;
+      color: rgba(210, 164, 114, 0.7);
+    }
+
+    /* Textos Internos */
+    h1.inner-title {
+      font-family: 'Cinzel', serif;
+      color: #5c2057;
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+
+    p {
+      font-size: 1em;
+      line-height: 1.7;
+      margin-bottom: 15px;
+      color: #3d243d;
+    }
+
+    .heart-icon {
+      font-size: 1.8em;
+      color: #8c2a82;
+      margin: 15px 0;
+    }
+
+    .page-number {
+      position: absolute;
+      bottom: 20px;
+      font-size: 0.75em;
+      color: #aaa;
+      font-style: italic;
+    }
+
+    /* --- CONTROLES INFERIORES --- */
+    .controls-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      z-index: 100;
+      margin-top: 30px;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .btn {
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 400;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      outline: none;
+    }
+
+    .btn i {
+      font-size: 1.1em;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid rgba(210, 164, 114, 0.4);
+      color: var(--dourado-claro);
+    }
+
+    .btn-outline:hover:not(:disabled) {
+      background: rgba(210, 164, 114, 0.1);
+      border-color: var(--dourado-claro);
+      transform: translateY(-2px);
+    }
+
+    .btn-solid {
+      background: linear-gradient(to bottom, #efd5b3, #d2a472);
+      border: none;
+      color: #2c0b2d;
+      font-weight: 600;
+    }
+
+    .btn-solid:hover:not(:disabled) {
+      box-shadow: 0 5px 15px rgba(210, 164, 114, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+      pointer-events: none;
+    }
+
+    .footer-text {
+      text-align: center;
+      color: rgba(235, 209, 176, 0.8);
+    }
+
+    .footer-text p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.95em;
+      margin: 0 0 10px 0;
+      color: inherit;
+    }
+
+    .footer-text span {
+      font-size: 0.9em;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 600px) {
       .book-stage {
-        perspective: 1500px;
-        width: 90%;
-        max-width: 360px;
-        height: 500px;
-        position: relative;
-        transform: translateY(-20px);
-        z-index: 10;
-      }
-
-      .book {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        transform-style: preserve-3d;
-        background-image: linear-gradient(
-          to right,
-          transparent 45%,
-          var(--roxo-marcador) 45%,
-          #9b59b6 50%,
-          var(--roxo-marcador) 55%,
-          transparent 55%
-        );
-        background-color: #2c1e3b;
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
-      }
-
-      /* --- AS FOLHAS DE PAPEL --- */
-      .paper {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        transform-origin: left center;
-        transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-        transform-style: preserve-3d;
-        border-radius: 5px;
-      }
-
-      /* --- CONTEÚDO DA PÁGINA (MIOLO) --- */
-      .page-content {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background-color: var(--branco-papel);
-        backface-visibility: hidden;
-        padding: 30px 25px;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        color: var(--preto-texto);
-        border: 1px solid #e0e0e0;
-      }
-
-      .front {
-        z-index: 2;
-        border-left: 3px solid var(--dourado-bordas);
-      }
-
-      .back {
-        z-index: 1;
-        transform: rotateY(180deg);
-        border-right: 3px solid var(--dourado-bordas);
-      }
-
-      .paper.flipped {
-        transform: rotateY(-180deg);
-      }
-
-      /* --- ESTILOS DA CAPA E CONTRACAPA --- */
-      .cover-style {
-        background:
-          linear-gradient(to bottom right, var(--roxo-escuro-capa), #240f24),
-          url("textura_roxa.jpg");
-        background-size: cover;
-        background-blend-mode: multiply;
-        color: var(--branco-ornamento);
-        border: 4px double var(--branco-ornamento);
-        padding: 20px;
-        box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.6);
-        border-left: none;
-      }
-
-      .ornate-frame {
-        width: 100%;
-        height: 100%;
-        border: 1px solid var(--branco-ornamento);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        padding: 15px;
-        box-sizing: border-box;
+        height: 480px;
+        max-width: 320px;
       }
 
       .main-title {
-        font-family: "Cinzel Decorative", cursive;
-        font-size: 2.5em;
-        margin: 0;
-        line-height: 1.1;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        font-size: 1.8em;
+      }
+
+      .top-ornament {
+        font-size: 1.2em;
       }
 
       .sub-title {
-        font-family: "Playfair Display", serif;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-top: 15px;
-        font-size: 0.9em;
-        border-top: 1px solid var(--branco-ornamento);
-        border-bottom: 1px solid var(--branco-ornamento);
-        padding: 8px 0;
+        font-size: 0.5em;
       }
 
-      .divider-ornament {
-        font-size: 1.8em;
-        margin: 10px 0;
-        opacity: 0.9;
-      }
-
-      h1.inner-title {
-        font-family: "Cinzel Decorative", cursive;
-        color: var(--roxo-botao);
-        font-size: 2em;
-        margin-bottom: 20px;
-      }
-
-      p {
-        font-size: 1.05em;
-        line-height: 1.6;
-        margin-bottom: 15px;
-      }
-
-      .heart-icon {
-        font-size: 2em;
-        color: var(--roxo-botao);
-        margin: 15px 0;
-      }
-
-      .page-number {
-        position: absolute;
-        bottom: 20px;
-        font-size: 0.8em;
-        color: #999;
-        font-style: italic;
-      }
-
-      /* --- BOTÕES DE NAVEGAÇÃO --- */
       .controls {
-        position: relative;
-        margin-top: 35px;
-        width: 90%;
-        max-width: 400px;
-        display: flex;
-        justify-content: space-between;
-        gap: 15px;
-        z-index: 100;
+        flex-direction: column;
+        gap: 10px;
+        width: 85%;
       }
 
       .btn {
-        padding: 12px 25px;
-        border-radius: 50px;
-        font-family: "Playfair Display", serif;
-        font-weight: 700;
-        font-size: 0.9em;
-        text-transform: uppercase;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        border: none;
-        outline: none;
-        min-width: 140px;
+        justify-content: center;
+        padding: 12px 20px;
       }
 
-      #prevBtn {
-        background: linear-gradient(to bottom, var(--roxo-botao), #3a1c3a);
-        color: var(--branco-ornamento);
-        border: 2px solid #3a1c3a;
+      .back-btn {
+        top: 15px;
+        left: 15px;
+        padding: 8px 15px;
+        font-size: 0.6rem;
       }
+    }
+  </style>
+</head>
 
-      #nextBtn {
-        background: linear-gradient(to bottom, #f0f0f0, #d0d0d0);
-        color: var(--roxo-botao);
-        border: 2px solid #c0c0c0;
-      }
+<body>
+  <!-- Partículas no fundo -->
+  <div class="particles" id="particles"></div>
 
-      .btn:hover:not(:disabled) {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
-      }
+  <a href="index.html" class="back-btn"> <i class="fas fa-arrow-left"></i> VOLTAR </a>
 
-      .btn:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-        transform: none;
-      }
+  <div class="book-stage">
+    <div class="book" id="book">
 
-      @media (max-width: 600px) {
-        .book-stage {
-          height: 420px;
-          max-width: 320px;
-        }
+      <div class="paper" style="z-index: 8">
+        <div class="page-content front cover-style">
+          <div class="ornate-frame">
+            <div class="corner-tr"></div>
+            <div class="corner-bl"></div>
 
-        .main-title {
-          font-size: 2em;
-        }
-
-        .inner-title {
-          font-size: 1.6em;
-        }
-
-        p {
-          font-size: 0.9em;
-        }
-
-        .page-content {
-          padding: 20px 15px;
-        }
-
-        .controls {
-          width: 95%;
-          gap: 10px;
-          margin-top: 25px;
-        }
-
-        .btn {
-          padding: 10px 15px;
-          font-size: 0.8em;
-          min-width: auto;
-          flex: 1;
-        }
-
-        /* Ajuste do botão voltar para mobile */
-        .back-btn {
-          top: 15px;
-          left: 15px;
-          padding: 8px 15px;
-          font-size: 0.8rem;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <a href="index.html" class="back-btn"> &#8592; Voltar </a>
-
-    <div class="book-stage">
-      <div class="book" id="book">
-        <div class="paper" style="z-index: 8">
-          <div class="page-content front cover-style">
-            <div class="ornate-frame">
-              <div class="divider-ornament">⚜</div>
-              <h1 class="main-title">Para alice</h1>
-              <div class="divider-ornament">⚜</div>
-              <h2 class="sub-title">O Livro do Meu Amor</h2>
+            <div class="top-ornament">⚜</div>
+            <div class="title-container">
+              <h1 class="main-title">PARA</h1>
+              <h1 class="main-title">CAMILA</h1>
             </div>
-          </div>
-          <div class="page-content back">
-            <h1 class="inner-title">Introdução</h1>
-            <p>
-              alice, este pequeno livro guarda algumas das infinitas razões
-              pelas quais você transformou a minha vida.
-            </p>
-            <p>
-              Cada página é um pedaço do meu coração que pertence somente a
-              você.
-            </p>
-            <span class="page-number">Página 1</span>
+            <div class="divider-line"></div>
+            <h2 class="sub-title">O Nosso Livro</h2>
+            <div class="bottom-heart">♡</div>
           </div>
         </div>
+        <div class="page-content back">
+          <h1 class="inner-title">Introdução</h1>
+          <p>
+            Camila, este pequeno livro guarda algumas das infinitas razões
+            pelas quais você transformou a minha vida.
+          </p>
+          <p>
+            Cada página é um pedaço do meu coração que pertence somente a você.
+          </p>
+          <span class="page-number">Página 1</span>
+        </div>
+      </div>
 
-        <div class="paper" style="z-index: 7">
-          <div class="page-content front">
-            <p>
-              Desde que você chegou, o mundo ganhou mais cor. O que era preto e
-              branco se tornou uma explosão de vida e alegria.
-            </p>
-            <span class="page-number">Página 2</span>
-          </div>
-          <div class="page-content back">
-            <h1 class="inner-title">Sua Luz</h1>
-            <p>
-              Você emalice uma luz própria, alice. Uma energia que ilumina não
-              apenas o ambiente, mas a alma de quem está ao seu redor.
-            </p>
-            <span class="page-number">Página 3</span>
-          </div>
+      <div class="paper" style="z-index: 7">
+        <div class="page-content front">
+          <p>
+            Desde que você chegou, o mundo ganhou mais cor. O que era preto e
+            branco se tornou uma explosão de vida e alegria.
+          </p>
+          <span class="page-number">Página 2</span>
+        </div>
+        <div class="page-content back">
+          <h1 class="inner-title">Sua Luz</h1>
+          <p>
+            Você emana uma luz própria, Camila. Uma energia que ilumina não
+            apenas o ambiente, mas a alma de quem está ao seu redor.
+          </p>
+          <span class="page-number">Página 3</span>
+        </div>
+      </div>
+
+      <div class="paper" style="z-index: 6">
+        <div class="page-content front">
+          <p>
+            Eu amo a maneira como você vê o mundo, com essa mistura única de
+            gentileza, inteligência e curiosidade.
+          </p>
+          <span class="page-number">Página 4</span>
+        </div>
+        <div class="page-content back">
+          <h1 class="inner-title">Seu Sorriso</h1>
+          <p>
+            Seu sorriso é, sem dúvida, minha paisagem favorita. Ele tem o
+            poder mágico de fazer qualquer dia ruim desaparecer.
+          </p>
+          <span class="page-number">Página 5</span>
+        </div>
+      </div>
+
+      <div class="paper" style="z-index: 5">
+        <div class="page-content front">
+          <p>
+            São os detalhes... O jeito que você arruma o cabelo, sua risada
+            espontânea, o brilho nos seus olhos quando fala do que ama.
+          </p>
+          <span class="page-number">Página 6</span>
+        </div>
+        <div class="page-content back">
+          <h1 class="inner-title">Nosso Lar</h1>
+          <p>
+            Estar com você é sentir que cheguei em casa. Você é meu porto
+            seguro, meu lugar de paz no meio do caos.
+          </p>
+          <span class="page-number">Página 7</span>
+        </div>
+      </div>
+
+      <div class="paper" style="z-index: 4">
+        <div class="page-content front">
+          <p>
+            Obrigado por ser minha parceira, minha melhor amiga e meu grande
+            amor. Por acreditar em mim e caminhar ao meu lado.
+          </p>
+          <span class="page-number">Página 8</span>
+        </div>
+        <div class="page-content back">
+          <h1 class="inner-title">Admiração</h1>
+          <p>
+            Eu admiro profundamente a mulher que você é. Sua força e sua
+            determinação me inspiram todos os dias.
+          </p>
+          <span class="page-number">Página 9</span>
+        </div>
+      </div>
+
+      <div class="paper" style="z-index: 3">
+        <div class="page-content front">
+          <p>
+            Cada memória que construímos juntos é um tesouro que guardo com
+            carinho. Mal posso esperar pelas próximas aventuras.
+          </p>
+          <span class="page-number">Página 10</span>
+        </div>
+        <div class="page-content back">
+          <h1 class="inner-title">Promessa</h1>
+          <p>
+            Prometo estar contigo nos dias de sol e segurar o guarda-chuva nos
+            dias de tempestade. Somos um time, sempre.
+          </p>
+          <span class="page-number">Página 11</span>
+        </div>
+      </div>
+
+      <div class="paper" style="z-index: 2">
+        <div class="page-content front">
+          <p>
+            Quando olho para o futuro, a única certeza que preciso ter é que
+            você estará lá, segurando a minha mão.
+          </p>
+          <span class="page-number">Página 12</span>
+        </div>
+        <div class="page-content back">
+          <h1 class="inner-title">Gratidão</h1>
+          <p>
+            Sou imensamente grato por cada segundo que passo ao seu lado. Você
+            é o melhor presente que a vida poderia ter me dado.
+          </p>
+          <span class="page-number">Página 13</span>
+        </div>
+      </div>
+
+      <div class="paper" style="z-index: 1">
+        <div class="page-content front">
+          <h1 class="inner-title">Eu Te Amo</h1>
+          <div class="heart-icon">♥</div>
+          <p>
+            Camila, eu te amo mais do que as palavras neste livro podem expressar. Você é o meu tudo.
+          </p>
+          <p>
+            Minha princesa, eu sempre estarei aqui segurando sua mão para sempre.
+          </p>
+          <p style="margin-top: 25px; font-weight: bold; font-style: italic">
+            Para sempre seu.
+          </p>
+          <span class="page-number">Página 14</span>
         </div>
 
-        <div class="paper" style="z-index: 6">
-          <div class="page-content front">
-            <p>
-              Eu amo a maneira como você vê o mundo, com essa mistura única de
-              gentileza, inteligência e curiosidade.
-            </p>
-            <span class="page-number">Página 4</span>
-          </div>
-          <div class="page-content back">
-            <h1 class="inner-title">Seu Sorriso</h1>
-            <p>
-              Seu sorriso é, sem dúvida, minha paisagem favorita. Ele tem o
-              poder mágico de fazer qualquer dia ruim desaparecer.
-            </p>
-            <span class="page-number">Página 5</span>
-          </div>
-        </div>
-
-        <div class="paper" style="z-index: 5">
-          <div class="page-content front">
-            <p>
-              São os detalhes... O jeito que você arruma o cabelo, sua risada
-              espontânea, o brilho nos seus olhos quando fala do que ama.
-            </p>
-            <span class="page-number">Página 6</span>
-          </div>
-          <div class="page-content back">
-            <h1 class="inner-title">Nosso Lar</h1>
-            <p>
-              Estar com você é sentir que cheguei em casa. Você é meu porto
-              seguro, meu lugar de paz no meio do caos.
-            </p>
-            <span class="page-number">Página 7</span>
-          </div>
-        </div>
-
-        <div class="paper" style="z-index: 4">
-          <div class="page-content front">
-            <p>
-              Obrigado por ser minha parceira, minha melhor amiga e meu grande
-              amor. Por acreditar em mim e caminhar ao meu lado.
-            </p>
-            <span class="page-number">Página 8</span>
-          </div>
-          <div class="page-content back">
-            <h1 class="inner-title">Admiração</h1>
-            <p>
-              Eu admiro profundamente a mulher que você é. Sua força e sua
-              determinação me inspiram todos os dias.
-            </p>
-            <span class="page-number">Página 9</span>
-          </div>
-        </div>
-
-        <div class="paper" style="z-index: 3">
-          <div class="page-content front">
-            <p>
-              Cada memória que construímos juntos é um tesouro que guardo com
-              carinho. Mal posso esperar pelas próximas aventuras.
-            </p>
-            <span class="page-number">Página 10</span>
-          </div>
-          <div class="page-content back">
-            <h1 class="inner-title">Promessa</h1>
-            <p>
-              Prometo estar contigo nos dias de sol e segurar o guarda-chuva nos
-              dias de tempestade. Somos um time, sempre.
-            </p>
-            <span class="page-number">Página 11</span>
-          </div>
-        </div>
-
-        <div class="paper" style="z-index: 2">
-          <div class="page-content front">
-            <p>
-              Quando olho para o futuro, a única certeza que preciso ter é que
-              você estará lá, segurando a minha mão.
-            </p>
-            <span class="page-number">Página 12</span>
-          </div>
-          <div class="page-content back">
-            <h1 class="inner-title">Gratidão</h1>
-            <p>
-              Sou imensamente grato por cada segundo que passo ao seu lado. Você
-              é o melhor presente que a vida poderia ter me dado.
-            </p>
-            <span class="page-number">Página 13</span>
-          </div>
-        </div>
-
-        <div class="paper" style="z-index: 1">
-          <div class="page-content front">
-            <h1 class="inner-title">Eu Te Amo</h1>
-            <div class="heart-icon">♥</div>
-            <p>
-              alice, eu te amo mais do que as palavras neste livro podem
-              expressar. Você é o meu tudo.
-            </p>
-            <p style="margin-top: 25px; font-weight: bold; font-style: italic">
-              Para sempre seu.
-            </p>
-            <span class="page-number">Página 14</span>
-          </div>
-
-          <div class="page-content back cover-style">
-            <div class="ornate-frame" style="justify-content: center">
-              <div class="divider-ornament" style="font-size: 2.5em">❦</div>
-              <h1 class="main-title" style="font-size: 3.5em">FIM</h1>
-              <div
-                class="divider-ornament"
-                style="font-size: 2.5em; transform: rotate(180deg)"
-              >
-                ❦
-              </div>
+        <div class="page-content back cover-style">
+          <div class="ornate-frame" style="justify-content: center">
+            <div class="top-ornament" style="font-size: 2.5em">❦</div>
+            <h1 class="main-title" style="font-size: 3.5em">FIM</h1>
+            <div class="top-ornament" style="font-size: 2.5em; transform: rotate(180deg); margin-top: 30px;">
+              ❦
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
+  <div class="controls-container">
     <div class="controls">
-      <button class="btn" id="prevBtn" onclick="goPrevPage()">
-        VOLTAR PÁGINA
+      <button class="btn btn-outline" id="prevBtn" onclick="goPrevPage()">
+        <i class="fas fa-book-open"></i> VOLTAR PÁGINA
       </button>
-      <button class="btn" id="nextBtn" onclick="goNextPage()">
-        PRÓXIMA PÁGINA
+      <button class="btn btn-solid" id="nextBtn" onclick="goNextPage()">
+        <i class="fas fa-heart"></i> ABRIR LIVRO
       </button>
     </div>
+    <div class="footer-text">
+      <p>Cada página guarda um pedaço do que nós somos.</p>
+      <span>♡</span>
+    </div>
+  </div>
 
-    <script>
-      let currentLocation = 1;
-      const numOfPapers = 8;
-      const maxLocation = numOfPapers + 1;
-      const prevBtn = document.getElementById("prevBtn");
-      const nextBtn = document.getElementById("nextBtn");
-      const papers = document.querySelectorAll(".paper");
+  <script>
+    // Partículas ao fundo
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 20; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      particle.innerHTML = '♥';
+      particle.style.left = Math.random() * 100 + 'vw';
+      particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
+      particle.style.animationDelay = (Math.random() * 10) + 's';
+      particlesContainer.appendChild(particle);
+    }
 
-      function updateButtons() {
-        prevBtn.disabled = currentLocation === 1;
-        nextBtn.disabled = currentLocation === maxLocation;
+    // Lógica do Livro 3D
+    let currentLocation = 1;
+    const numOfPapers = 8;
+    const maxLocation = numOfPapers + 1;
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const papers = document.querySelectorAll(".paper");
+
+    function updateButtons() {
+      prevBtn.disabled = currentLocation === 1;
+      nextBtn.disabled = currentLocation === maxLocation;
+
+      // Mudar texto do botão de abrir livro dependendo do estado
+      if (currentLocation === 1) {
+        nextBtn.innerHTML = '<i class="fas fa-heart"></i> ABRIR LIVRO';
+        document.getElementById("book").style.transform = "translateX(0%)";
+      } else if (currentLocation === maxLocation) {
+        nextBtn.innerHTML = '<i class="fas fa-heart"></i> FIM';
+        document.getElementById("book").style.transform = "translateX(100%)";
+      } else {
+        nextBtn.innerHTML = '<i class="fas fa-heart"></i> PRÓXIMA PÁGINA';
+        document.getElementById("book").style.transform = "translateX(50%)";
       }
+    }
 
-      function goNextPage() {
-        if (currentLocation < maxLocation) {
-          let currentPaper = papers[currentLocation - 1];
-          currentPaper.classList.add("flipped");
-          currentLocation++;
-          setTimeout(() => {
-            currentPaper.style.zIndex = currentLocation;
-          }, 600);
-          updateButtons();
-        }
+    function goNextPage() {
+      if (currentLocation < maxLocation) {
+        let currentPaper = papers[currentLocation - 1];
+        currentPaper.classList.add("flipped");
+        currentLocation++;
+        setTimeout(() => {
+          currentPaper.style.zIndex = currentLocation;
+        }, 600);
+        updateButtons();
       }
+    }
 
-      function goPrevPage() {
-        if (currentLocation > 1) {
-          currentLocation--;
-          let currentPaper = papers[currentLocation - 1];
-          currentPaper.classList.remove("flipped");
-          currentPaper.style.zIndex = numOfPapers - currentLocation + 1;
-          updateButtons();
-        }
+    function goPrevPage() {
+      if (currentLocation > 1) {
+        currentLocation--;
+        let currentPaper = papers[currentLocation - 1];
+        currentPaper.classList.remove("flipped");
+        currentPaper.style.zIndex = numOfPapers - currentLocation + 1;
+        updateButtons();
       }
+    }
 
-      updateButtons();
+    updateButtons();
 
-      document.addEventListener("keydown", function (event) {
-        if (event.key === "ArrowRight") goNextPage();
-        if (event.key === "ArrowLeft") goPrevPage();
-      });
-    </script>
-  </body>
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "ArrowRight") goNextPage();
+      if (event.key === "ArrowLeft") goPrevPage();
+    });
+  </script>
+</body>
+
 </html>

@@ -1925,10 +1925,12 @@ h1 {
   background: white;
   color: #333;
   padding: 15px 20px;
-  max-width: 260px;
+  max-width: min(90vw, 350px);
+  max-height: 75vh;
+  overflow-y: auto;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdalice, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 14px;
   line-height: 1.5;
 }
